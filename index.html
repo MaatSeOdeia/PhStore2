@@ -486,11 +486,9 @@
     fetch("notificar.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-            produto: itemsList,
-            valor: total.toFixed(2),
-            status: "Pago"
-        })
+        body: "produto=" + encodeURIComponent(itemsList) +
+      "&valor=" + encodeURIComponent(total.toFixed(2)) +
+      "&status=" + encodeURIComponent("Pago")
     });
         }
 
