@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -354,7 +355,6 @@
 <div id="cartTotal"></div>
 <button class="cta-button" onclick="checkout()" style="width: 100%; margin-top: 1rem;">Finalizar Compra</button>
 <input id="tiktokUser" placeholder="Digite seu usuário do TikTok" style="width: 100%; padding: 0.8rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #ccc;" type="text"/>
-
 </div>
 </div>
 <script>
@@ -480,7 +480,8 @@
             const payload = {
                 produto: items,
                 valor: total,
-                status: "Indefinido"
+                status: "Indefinido",
+                tiktok: tiktokUser
             };
 
             // Enviar para o PHP
