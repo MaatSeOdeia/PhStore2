@@ -247,6 +247,43 @@
             color: #28a745;
         }
 
+        /* TikTok Input */
+        .tiktok-input {
+            margin: 1rem 0;
+        }
+
+        .tiktok-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .tiktok-input input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .tiktok-input input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .tiktok-input input.error {
+            border-color: #dc3545;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
         /* Footer */
         .footer {
             background: #333;
@@ -361,6 +398,10 @@
             <h2>Seu Carrinho</h2>
             <div id="cartItems"></div>
             <div id="cartTotal"></div>
+            <div class="tiktok-input">
+                <label for="tiktokInput">Seu TikTok (obrigatório):</label>
+                <input type="text" id="tiktokInput" placeholder="Digite seu @ do TikTok (ex: @seuusuario)" maxlength="50">
+            </div>
             <button class="cta-button" onclick="checkout()" style="width: 100%; margin-top: 1rem;">Finalizar Compra</button>
         </div>
     </div>
@@ -433,6 +474,11 @@
             const modal = document.getElementById('cartModal');
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
+            const tiktokInput = document.getElementById('tiktokInput');
+
+            // Clear previous input
+            tiktokInput.value = '';
+            tiktokInput.classList.remove('error');
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p>Seu carrinho está vazio</p>';
@@ -469,12 +515,54 @@
             openCart(); // Refresh cart display
         }
 
+        // Validate TikTok input
+        function validateTikTok(tiktok) {
+            // Remove spaces and convert to lowercase
+            tiktok = tiktok.trim().toLowerCase();
+            
+            // Check if it's empty
+            if (!tiktok) return false;
+            
+            // Check if it starts with @
+            if (!tiktok.startsWith('@')) {
+                tiktok = '@' + tiktok;
+            }
+            
+            // Check if it has valid characters (letters, numbers, dots, underscores)
+            const validPattern = /^@[a-zA-Z0-9._]+$/;
+            
+            return validPattern.test(tiktok) && tiktok.length >= 2 && tiktok.length <= 25;
+        }
+
+        // Format TikTok input
+        function formatTikTok(tiktok) {
+            tiktok = tiktok.trim();
+            if (tiktok && !tiktok.startsWith('@')) {
+                tiktok = '@' + tiktok;
+            }
+            return tiktok;
+        }
+
         // Checkout (usando PHP)
         function checkout() {
             if (cart.length === 0) {
                 alert("Carrinho vazio!");
                 return;
             }
+
+            const tiktokInput = document.getElementById('tiktokInput');
+            const tiktokValue = tiktokInput.value.trim();
+
+            // Validate TikTok
+            if (!validateTikTok(tiktokValue)) {
+                tiktokInput.classList.add('error');
+                showNotification("Por favor, insira um TikTok válido (ex: @seuusuario)");
+                tiktokInput.focus();
+                return;
+            }
+
+            // Format TikTok
+            const formattedTikTok = formatTikTok(tiktokValue);
 
             const items = cart.map(item => `${item.name} x${item.quantity}`).join(", ");
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
@@ -483,6 +571,7 @@
             const payload = {
                 produto: items,
                 valor: total,
+                tiktok: formattedTikTok,
                 status: "Indefinido"
             };
 
@@ -498,7 +587,7 @@
             .then(data => {
                 console.log("Resposta do PHP:", data);
                 if (data.status === "ok") {
-                    alert(`Compra enviada com sucesso!\n\nItens: ${items}\nTotal: R$ ${total}`);
+                    alert(`Compra enviada com sucesso!\n\nItens: ${items}\nTotal: R$ ${total}\nTikTok: ${formattedTikTok}`);
                     cart = [];
                     updateCartCount();
                     closeCart();
@@ -552,29 +641,4 @@
         });
 
         // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('cartModal');
-            if (event.target == modal) {
-                closeCart();
-            }
-        }
-
-        // Add CSS for animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Initialize
-        loadProducts();
-    </script>
-</body>
-    </html>
+    
