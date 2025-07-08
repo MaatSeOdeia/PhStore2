@@ -366,6 +366,9 @@
     </div>
 
     <script>
+        // URL do seu arquivo PHP
+        const notificarUrl = "notificar.php";
+
         // Product data
         const products = [
             { id: 1, name: "MEDUSA GOLD", price: 24.99 },
@@ -466,37 +469,47 @@
             openCart(); // Refresh cart display
         }
 
-        // Checkout
+        // Checkout (usando PHP)
         function checkout() {
-      if (cart.length === 0) {
-        alert("Carrinho vazio!");
-        return;
-      }
-
-      const items = cart.map(item => `${item.name} x${item.quantity}`).join(", ");
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
-
-      const payload = {
-        content: `🧠 **Nova Compra na PH STORE** 🧠\n\n📦 Produtos: ${items}\n💵 Valor: R$ ${total}\n✅ Status: Pago`
-      };
-
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      })
-      .then(() => alert("Compra enviada para o Discord!"))
-      .catch(() => alert("Erro ao enviar para o Discord."));
+            if (cart.length === 0) {
+                alert("Carrinho vazio!");
+                return;
             }
 
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const itemsList = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
-            
-            alert(`Compra finalizada!\n\nItens:\n${itemsList}\n\nTotal: R$ ${total.toFixed(2)}\n\nObrigado por comprar na PH STORE!`);
-            
-            cart = [];
-            updateCartCount();
-            closeCart();
+            const items = cart.map(item => `${item.name} x${item.quantity}`).join(", ");
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+
+            // Preparar dados no formato JSON que o PHP espera
+            const payload = {
+                produto: items,
+                valor: total,
+                status: "Indefinido"
+            };
+
+            // Enviar para o PHP
+            fetch(notificarUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Resposta do PHP:", data);
+                if (data.status === "ok") {
+                    alert(`Compra enviada com sucesso!\n\nItens: ${items}\nTotal: R$ ${total}`);
+                    cart = [];
+                    updateCartCount();
+                    closeCart();
+                } else {
+                    alert("Erro ao enviar notificação: " + (data.erro || "Erro desconhecido"));
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao enviar:", error);
+                alert("Erro ao processar compra. Tente novamente.");
+            });
         }
 
         // Show notification
@@ -564,4 +577,4 @@
         loadProducts();
     </script>
 </body>
-  </html>
+    </html>
