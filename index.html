@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PH STORE - Brainrots Premium</title>
-    <style>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PH STORE - Brainrots Premium</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -247,43 +246,6 @@
             color: #28a745;
         }
 
-        /* TikTok Input */
-        .tiktok-input {
-            margin: 1rem 0;
-        }
-
-        .tiktok-input label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .tiktok-input input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .tiktok-input input:focus {
-            border-color: #28a745;
-            outline: none;
-        }
-
-        .tiktok-input input.error {
-            border-color: #dc3545;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
         /* Footer */
         .footer {
             background: #333;
@@ -322,105 +284,84 @@
         .fade-in {
             animation: fadeIn 0.6s ease-out;
         }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <h1>PH STORE</h1>
-            <p>Brainrots Premium - Qualidade Garantida</p>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav class="nav">
-        <ul>
-            <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#loja">Loja</a></li>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#contato">Contato</a></li>
-        </ul>
-    </nav>
-
-    <!-- Cart Icon -->
-    <div class="cart" onclick="openCart()">
+<!-- Header -->
+<header class="header">
+<div class="container">
+<h1>PH STORE</h1>
+<p>Brainrots Premium - Qualidade Garantida</p>
+</div>
+</header>
+<!-- Navigation -->
+<nav class="nav">
+<ul>
+<li><a class="active" href="#home">Home</a></li>
+<li><a href="#loja">Loja</a></li>
+<li><a href="#sobre">Sobre</a></li>
+<li><a href="#contato">Contato</a></li>
+</ul>
+</nav>
+<!-- Cart Icon -->
+<div class="cart" onclick="openCart()">
         🛒 <span class="cart-count" id="cartCount">0</span>
-    </div>
+</div>
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="container">
+<h2>Melhores Brainrots do Mercado</h2>
+<p>Explore nossa coleção exclusiva de brainrots premium com os melhores preços e qualidade incomparável.</p>
+<a class="cta-button" href="#loja">Ver Produtos</a>
+</div>
+</section>
+<!-- Products Section -->
+<section class="products" id="loja">
+<div class="container">
+<h2>Nossa Loja</h2>
+<div class="product-grid" id="productGrid">
+<!-- Products will be loaded here by JavaScript -->
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="hero" id="sobre">
+<div class="container">
+<h2>Sobre a PH STORE</h2>
+<p>Somos especialistas em brainrots de alta qualidade. Nossa missão é oferecer os melhores produtos com preços justos e atendimento excepcional.</p>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="hero" id="contato">
+<div class="container">
+<h2>Contato</h2>
+<p>Entre em contato conosco para dúvidas, sugestões ou suporte técnico.</p>
+<button class="cta-button" onclick="alert('WhatsApp: (11) 99999-9999')">Falar no WhatsApp</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<p>� 2025 PH STORE. Todos os direitos reservados.</p>
+</div>
+</footer>
+<!-- Cart Modal -->
+<div class="modal" id="cartModal">
+<div class="modal-content">
+<span class="close" onclick="closeCart()">�</span>
+<h2>Seu Carrinho</h2>
+<div id="cartItems"></div>
+<div id="cartTotal"></div>
+<button class="cta-button" onclick="checkout()" style="width: 100%; margin-top: 1rem;">Finalizar Compra</button>
+<input id="tiktokUser" placeholder="Digite seu usuário do TikTok" style="width: 100%; padding: 0.8rem; border-radius: 8px; margin-top: 1rem; border: 1px solid #ccc;" type="text"/>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <h2>Melhores Brainrots do Mercado</h2>
-            <p>Explore nossa coleção exclusiva de brainrots premium com os melhores preços e qualidade incomparável.</p>
-            <a href="#loja" class="cta-button">Ver Produtos</a>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="products" id="loja">
-        <div class="container">
-            <h2>Nossa Loja</h2>
-            <div class="product-grid" id="productGrid">
-                <!-- Products will be loaded here by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="hero" id="sobre">
-        <div class="container">
-            <h2>Sobre a PH STORE</h2>
-            <p>Somos especialistas em brainrots de alta qualidade. Nossa missão é oferecer os melhores produtos com preços justos e atendimento excepcional.</p>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="hero" id="contato">
-        <div class="container">
-            <h2>Contato</h2>
-            <p>Entre em contato conosco para dúvidas, sugestões ou suporte técnico.</p>
-            <button class="cta-button" onclick="alert('WhatsApp: (11) 99999-9999')">Falar no WhatsApp</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 PH STORE. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeCart()">&times;</span>
-            <h2>Seu Carrinho</h2>
-            <div id="cartItems"></div>
-            <div id="cartTotal"></div>
-            <div class="tiktok-input">
-                <label for="tiktokInput">Seu TikTok (obrigatório):</label>
-                <input type="text" id="tiktokInput" placeholder="Digite seu @ do TikTok (ex: @seuusuario)" maxlength="50">
-            </div>
-            <button class="cta-button" onclick="checkout()" style="width: 100%; margin-top: 1rem;">Finalizar Compra</button>
-        </div>
-    </div>
-
-    <script>
+</div>
+</div>
+<script>
         // URL do seu arquivo PHP
         const notificarUrl = "notificar.php";
 
-        // Lista de produtos atualizada conforme a imagem
+        // Product data
         const products = [
             { id: 1, name: "MEDUSA GOLD", price: 24.99 },
             { id: 2, name: "LA VACA BLOOD", price: 24.99 },
@@ -440,20 +381,12 @@
 
         // Load products
         function loadProducts() {
-            console.log('Carregando produtos...');
             const productGrid = document.getElementById('productGrid');
-            
-            if (!productGrid) {
-                console.error('Elemento productGrid não encontrado');
-                return;
-            }
-            
             productGrid.innerHTML = '';
 
-            products.forEach((product, index) => {
+            products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card fade-in';
-                productCard.style.animationDelay = `${index * 0.1}s`;
                 productCard.innerHTML = `
                     <div class="product-name">${product.name}</div>
                     <div class="product-price">R$ ${product.price.toFixed(2)}</div>
@@ -463,8 +396,6 @@
                 `;
                 productGrid.appendChild(productCard);
             });
-            
-            console.log(`${products.length} produtos carregados`);
         }
 
         // Add to cart
@@ -494,11 +425,6 @@
             const modal = document.getElementById('cartModal');
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-            const tiktokInput = document.getElementById('tiktokInput');
-
-            // Clear previous input
-            tiktokInput.value = '';
-            tiktokInput.classList.remove('error');
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p>Seu carrinho está vazio</p>';
@@ -535,54 +461,17 @@
             openCart(); // Refresh cart display
         }
 
-        // Validate TikTok input
-        function validateTikTok(tiktok) {
-            // Remove spaces and convert to lowercase
-            tiktok = tiktok.trim().toLowerCase();
-            
-            // Check if it's empty
-            if (!tiktok) return false;
-            
-            // Check if it starts with @
-            if (!tiktok.startsWith('@')) {
-                tiktok = '@' + tiktok;
-            }
-            
-            // Check if it has valid characters (letters, numbers, dots, underscores)
-            const validPattern = /^@[a-zA-Z0-9._]+$/;
-            
-            return validPattern.test(tiktok) && tiktok.length >= 2 && tiktok.length <= 25;
-        }
-
-        // Format TikTok input
-        function formatTikTok(tiktok) {
-            tiktok = tiktok.trim();
-            if (tiktok && !tiktok.startsWith('@')) {
-                tiktok = '@' + tiktok;
-            }
-            return tiktok;
-        }
-
         // Checkout (usando PHP)
         function checkout() {
+            const tiktokUser = document.getElementById("tiktokUser").value.trim();
+            if (!tiktokUser || tiktokUser.length < 3 || !tiktokUser.includes("@")) {
+                alert("Por favor, insira seu usuário do TikTok corretamente (ex: @seunome).");
+                return;
+            }
             if (cart.length === 0) {
                 alert("Carrinho vazio!");
                 return;
             }
-
-            const tiktokInput = document.getElementById('tiktokInput');
-            const tiktokValue = tiktokInput.value.trim();
-
-            // Validate TikTok
-            if (!validateTikTok(tiktokValue)) {
-                tiktokInput.classList.add('error');
-                showNotification("Por favor, insira um TikTok válido (ex: @seuusuario)");
-                tiktokInput.focus();
-                return;
-            }
-
-            // Format TikTok
-            const formattedTikTok = formatTikTok(tiktokValue);
 
             const items = cart.map(item => `${item.name} x${item.quantity}`).join(", ");
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
@@ -591,7 +480,6 @@
             const payload = {
                 produto: items,
                 valor: total,
-                tiktok: formattedTikTok,
                 status: "Indefinido"
             };
 
@@ -607,7 +495,7 @@
             .then(data => {
                 console.log("Resposta do PHP:", data);
                 if (data.status === "ok") {
-                    alert(`Compra enviada com sucesso!\n\nItens: ${items}\nTotal: R$ ${total}\nTikTok: ${formattedTikTok}`);
+                    alert(`Compra enviada com sucesso!\n\nItens: ${items}\nTotal: R$ ${total}`);
                     cart = [];
                     updateCartCount();
                     closeCart();
@@ -641,4 +529,48 @@
 
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
-                setTimeout(() => notification.remove(), 300)
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Update active nav item
+                document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target == modal) {
+                closeCart();
+            }
+        }
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        loadProducts();
+    </script>
+</body></html>
