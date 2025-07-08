@@ -468,19 +468,30 @@
 
         // Checkout
         function checkout() {
-            if (cart.length === 0) {
-                alert('Seu carrinho está vazio!');
-                return;
-            }
+    if (cart.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+    }
 
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const itemsList = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
-            
-            alert(`Compra finalizada!\n\nItens:\n${itemsList}\n\nTotal: R$ ${total.toFixed(2)}\n\nObrigado por comprar na PH STORE!`);
-            
-            cart = [];
-            updateCartCount();
-            closeCart();
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const itemsList = cart.map(item => `${item.name} x${item.quantity}`).join(', ');
+
+    alert(`Compra finalizada!\n\nItens:\n${itemsList}\n\nTotal: R$ ${total.toFixed(2)}\n\nObrigado por comprar na PH STORE!`);
+
+    cart = [];
+    updateCartCount();
+    closeCart();
+
+    // Envia para o Discord via notificar.php
+    fetch("notificar.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            produto: itemsList,
+            valor: total.toFixed(2),
+            status: "Pago"
+        })
+    });
         }
 
         // Show notification
